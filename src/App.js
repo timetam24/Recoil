@@ -1,38 +1,35 @@
 import "./App.css";
-import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { countState } from "./atom";
 
-const Counter = (props) => {
+const Counter = () => {
+  const [count, setCount] = useRecoilState(countState);
+
   return (
     <div>
       <h1>Counter</h1>
       <button
         onClick={() => {
-          props.onUp();
+          setCount(count + 1);
         }}
       >
         +
       </button>
-      {props.count}
+      {count}
     </div>
   );
 };
 
-const DisplayCounter = ({ count }) => {
+const DisplayCounter = () => {
+  const [count] = useRecoilState(countState);
   return <div>{count}</div>;
 };
 
 function App() {
-  const [count, setCount] = useState(10);
-
   return (
     <div>
-      <Counter
-        count={count}
-        onUp={() => {
-          setCount(count + 1);
-        }}
-      />
-      <DisplayCounter count={count} />
+      <Counter />
+      <DisplayCounter />
     </div>
   );
 }
